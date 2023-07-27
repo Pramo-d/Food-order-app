@@ -1,8 +1,12 @@
-const MealsSummary = (props) => {
+import classes from "./MealsSummary.module.css";
+const MealsSummary = () => {
   return (
-    <div>
-      <h2>Delicious Food ,delivered To You</h2>
-      <p>Choose your favorite meals from our board selection of avaialble meals and enjoy the delicious meals </p>
+    <div className={classes.summary}>
+      <h2>Welcome to Delicious Food Family Restaurant</h2>
+      <p>
+        Choose your favorite meals from our board selection of avaialble meals
+        and enjoy the delicious meals
+      </p>
     </div>
   );
 };
