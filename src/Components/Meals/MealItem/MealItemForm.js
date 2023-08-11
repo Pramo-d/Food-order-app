@@ -1,22 +1,46 @@
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
+import { useRef,useState } from "react";
 import classes from "./MealItemForm.module.css";
 import Input from "../../UI/Input";
-import CartContext from "../../../store/cart-context";
+// import CartContext from "../../../store/cart-context";
 
 const MealItemForm = (props) => {
 
-  const cartCtx = useContext(CartContext);
+  const [amountIsValid,setAmountIsValid]=useState(true);
+  const amountInputRef = useRef();
 
-  const addItemToCart = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
 
-    const quantity = document.getElementById("amount" + props.id).value;
-    cartCtx.addItem({...props.item, quantity: quantity });
-    console.log(cartCtx.items);
+    const enteredAmount = amountInputRef.current.value;
+    const enteredAmountNumber = +enteredAmount; // + convert it string to number
+
+    if (
+      enteredAmount.trim().length === 0 ||
+      enteredAmountNumber < 1 ||
+      enteredAmountNumber > 5
+    ) {
+      setAmountIsValid(false);
+      return;
+    }
+
+    props.onAddToCart(enteredAmountNumber);
   };
+
+  // const cartCtx = useContext(CartContext);
+
+  // const addItemToCart = (event) => {
+  //   event.preventDefault();
+
+  //   const quantity = document.getElementById("amount" + props.id).value;
+  //   cartCtx.addItem({...props.item, quantity: quantity });
+  //   console.log(cartCtx.items);
+  // };
+
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <Input
+        ref={amountInputRef}
         label="Amount"
         input={{
           id: "amount" + props.id,
@@ -27,7 +51,9 @@ const MealItemForm = (props) => {
           defaultValue: "1",
         }}
       />
-      <button onClick={addItemToCart}>+ Add</button>
+      {/* <button onClick={addItemToCart}>+ Add</button> */}
+      <button>+ Add</button>
+      {!amountIsValid && <p>Please entered a valid amount (1-5).</p>}
     </form>
   );
 };
