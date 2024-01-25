@@ -37,8 +37,7 @@ const cartReducer = (state, action) => {
     };
   }
 
-     if (action.type === 'REMOVE') {
-   
+  if (action.type === "REMOVE") {
     const existingCartitemIndex = state.items.findIndex(
       (item) => item.id === action.id
     );
@@ -79,7 +78,6 @@ const CartProvider = (props) => {
   // console.log(cartContext);
 
   const removeItemfromCartHandler = (id) => {
-
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
